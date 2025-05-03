@@ -1,12 +1,20 @@
 # Configuration file for sandboxctl(8).
 
+HOST_HOME="/home/schmonz"
+if [ -d "/Users/schmonz/Documents" ]; then
+	HOST_HOME="/Users/schmonz/Documents"
+fi
+
 case $(uname) in
+Darwin)
+	SANDBOX_TYPE=darwin-native
+	;;
 Linux)
 	SANDBOX_TYPE=linux-native
 	;;
 NetBSD)
 	SANDBOX_TYPE=netbsd-release
-	NETBSD_RELEASE_RELEASEDIR="/home/schmonz/binaries/system/$(uname -r)-$(uname -m)"
+	NETBSD_RELEASE_RELEASEDIR="${HOST_HOME}/binaries/system/$(uname -r)-$(uname -m)"
 	;;
 *)
 	echo 2>&1 "unknown sandbox type"

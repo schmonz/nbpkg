@@ -1,17 +1,22 @@
-EXTRA_MKCONF="/home/schmonz/trees/nbvm/etc/pkgcomp-extramkconf"
-SANDBOX_CONFFILE="/home/schmonz/trees/nbvm/etc/pkgcomp-sandboxconf"
-
-UPDATE_SOURCES=false
-
 # Schmonzy business.
 VINTAGE="$(date -u '+%Y%m%d-DEBUG')"
 [ -n "${NBPKG_VINTAGE}" ] && VINTAGE="${NBPKG_VINTAGE}"
 
+HOST_HOME="/home/schmonz"
+if [ -d "/Users/schmonz/Documents" ]; then
+	HOST_HOME="/Users/schmonz/Documents"
+fi
+
+EXTRA_MKCONF="${HOST_HOME}/trees/nbpkg/etc/pkgcomp-extramkconf"
+SANDBOX_CONFFILE="${HOST_HOME}/trees/nbpkg/etc/pkgcomp-sandboxconf"
+
+UPDATE_SOURCES=false
+
 # Host file layout.
-PKGSRCDIR="/home/schmonz/trees/pkgsrc-cvs"
-[ -d "/home/schmonz/not-nfs/pkgsrc" ] && PKGSRCDIR="/home/schmonz/not-nfs/pkgsrc"
+PKGSRCDIR="${HOST_HOME}/trees/pkgsrc-cvs"
+[ -d "${HOST_HOME}/not-nfs/pkgsrc" ] && PKGSRCDIR="${HOST_HOME}/not-nfs/pkgsrc"
 DISTDIR="${PKGSRCDIR}/distfiles"
-PACKAGES="/home/schmonz/binaries/packages/$(uname -r)-$(uname -m)-${VINTAGE}"
+PACKAGES="${HOST_HOME}/binaries/packages/$(uname -r)-$(uname -m)-${VINTAGE}"
 PBULK_LOG="${PACKAGES}/log"
 PBULK_PACKAGES="${PACKAGES}/pbulk"
 
@@ -22,4 +27,4 @@ SYSCONFDIR="/etc"
 VARBASE="/var"
 
 # List of packages to build during automatic execution.
-AUTO_PACKAGES="$(grep -v '^#' '/home/schmonz/trees/nbvm/etc/pkgcomp-autopackages')"
+AUTO_PACKAGES="$(grep -v '^#' "${HOST_HOME}/trees/nbpkg/etc/pkgcomp-autopackages")"
