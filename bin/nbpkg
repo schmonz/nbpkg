@@ -12,8 +12,6 @@ mkdir -p ${NBPKG_BINARIESDIR}
 
 NBPKG_PREFIX=/opt/pkg
 
-echo "NBPKG_TREESDIR: ${NBPKG_TREESDIR}"
-
 as_root() {
 	if [ 0 = $(id -u) ]; then
 		$@
@@ -182,7 +180,6 @@ nbpkg_serverpackages_package_rebuild() {
 
 nbpkg_serverpackages_package_upload() {
 	LATEST_PACKAGES=$(ls -t ${NBPKG_BINARIESDIR} | head -1)
-	echo "LATEST_PACKAGES: ${LATEST_PACKAGES}"
 	ADD_PACKAGES="$(cd ${NBPKG_BINARIESDIR}/${LATEST_PACKAGES}/All >/dev/null && for p in $(echo *.tgz); do if grep -q ^$(pkg_info -Q PKGPATH $p)\$ ${NBPKG_TREESDIR}/nbpkg/etc/pkgcomp-autopackages; then echo $p; fi; done)"
 	cat >/var/tmp/nbpkg-serverinstall <<EOT
 #!/bin/sh
