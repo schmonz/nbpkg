@@ -43,10 +43,6 @@ CFLAGS+=		-g
 _INSTALL_UNSTRIPPED=	# defined
 .endif
 
-PKG_STACKCHECK_DEFAULT=	yes
-PKG_STACKCHECK.mail/rspamd=		no
-PKGSRC_USE_STACK_CHECK=	${PKG_STACKCHECK.${PKGPATH}:U${PKG_STACKCHECK_DEFAULT}}
-
 PKG_DEFAULT_OPTIONS=	inet6 ssl tls
 PKG_DEFAULT_OPTIONS+=	-cups -fam -gnutls -gssapi -kerberos -sasl -x11 -xcb
 X11_TYPE=		modular	# in case something somehow still links with x11
