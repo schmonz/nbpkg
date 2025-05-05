@@ -32,8 +32,6 @@ LOCALPATCHES=		${PKGSRCDIR}/localpatches
 
 PREFER_PKGSRC=		openssl
 
-PKGSRC_MKREPRO=		no
-
 PKG_DEFAULT_OPTIONS=	inet6 ssl tls
 PKG_DEFAULT_OPTIONS+=	-cups -fam -gnutls -gssapi -kerberos -sasl -x11 -xcb
 X11_TYPE=		modular	# in case something somehow still links with x11
