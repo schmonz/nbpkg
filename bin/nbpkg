@@ -34,6 +34,7 @@ nbpkg_expand_symlinks() {
 
 nbpkg_bootstrap() {
 	_sysconfdir="/etc/pkg"
+	mkdir -p "${_sysconfdir}"
 	echo ".include \"${_sysconfdir}/nbpkg-shared.mk.conf\"" > /var/tmp/nbpkg-fragment.mk.conf
 	cd ${NBPKG_TREESDIR}/pkgsrc-cvs/bootstrap
 	as_root ./bootstrap \
