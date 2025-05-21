@@ -22,6 +22,10 @@ MAKE_JOBS_DEFAULT=	2
 MAKE_JOBS=		${PKG_MAKE_JOBS.${PKGPATH}:U${MAKE_JOBS_DEFAULT}}
 PKG_MAKE_JOBS.www/elinks=		1
 
+PKGSRC_USE_CTF=		yes
+DBG=			# don't add default optimizer flags from bootstrap-mk-files to CFLAGS
+CFLAGS+=		-g -O2 -pipe
+
 #ACCEPTABLE_LICENSES+=	gnu-gpl-v3 lame-license artistic-2.0
 ACCEPTABLE_LICENSES+=	vim-license ms-ttf-license gnu-agpl-v3 djb-nonlicense \
 			trn-license
