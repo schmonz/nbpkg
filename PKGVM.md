@@ -20,27 +20,21 @@ Reboot into full 10.0 and run `sysinst` from in there, for good measure
 
 -----
 
-### 0. In-VM updates in progress
+### 0. In-VM transitions in progress
+
+`nbvm` -> `nbpkg`:
+
+```shell
+sudo rm -f /etc/pkg/nbpkg-shared.mk.conf && sudo ln -s ~schmonz/trees/nbpkg/etc/nbpkg-shared.mk.conf /etc/pkg
+cd ~/bin && rm -f cvs make nb*
+cd ~/trees/nbpkg && bmake
+cd ../nbvm && bmake
 ```
-( cd ~/bin && rm make pkgbuild qemu-* )
-( cd /etc/pkg \
-    && sudo rm -f pkgbuild-shared.mk.conf \
-    && sudo ln -s ~schmonz/trees/nbvm/etc/nbpkg-shared.mk.conf . \
-    && sudo vi /etc/pkg/mk.conf )
-( cd ~/trees/nbvm && make )
 
-hostname
+`python312`:
 
-cat /etc/pkg/mk.conf
-
-( cd security/openssl && make package )
-for i in libfetch pkg_install; do ( cd */$i && make PKG_OPTIONS.libfetch=-openssl replace clean ); done
-( cd security/openssl && make replace clean )
-for i in libfetch fetch pkg_install; do ( cd */$i && make replace clean ); done
-pkg_rolling-replace -suv
-
-pkg_delete py310-\* python310
-pkg_delete py39-\* python39
+```shell
+pkg_delete py311-\* python311
 ```
 
 -----
@@ -78,6 +72,7 @@ $ sudo apk add nfs-utils gcc g++ procps coreutils linux-headers  # Alpine
 $ sudo pacman -S nfs-utils gcc inetutils                         # Arch
 $ sudo apt install nfs-common gcc g++                            # Debian
 $ sudo dnf install nfs-utils gcc gcc-c++ redhat-lsb-core         # Red Hat
+# pkgin install -y gcc13 gcc13-libs doas                         # SmartOS
 $ sudo pkg install gcc-11                                        # Solaris 11
 $ sudo xbps-install curl                                         # Void
 ```
@@ -92,8 +87,16 @@ Add NFS entry to `/etc/*fstab`, for instance (from Rocky Linux):
 ```sh
 $ mkdir ~/trees
 $ sudo mount ~schmonz/trees
-$ sudo ~schmonz/trees/nbvm/bin/nbpkg bootstrap
+$ sudo ~schmonz/trees/nbpkg/bin/nbpkg bootstrap
 ```
+
+(`nbvm ncpus` should get fed into `MAKE_JOBS`, once it's present)
+
+(SmartOS: add `_OPSYS_SUPPORTS_SSP=no` to `/etc/pkg/mk.conf`.
+Once we have a pkgsrc gcc going, try removing it.
+In the meantime this will fix "missing SSP" when trying to install `checkperms`, en route to `sudo`.)
+
+(Create a `sudo` wrapper in `~/bin`)
 
 ### 5. Configure environment
 
@@ -105,7 +108,8 @@ $ cd ~/trees/dotfiles && /opt/pkg/bin/bmake dotfiles
 $ mkdir -p ~/.vim && ln -s ~/trees/vimbundle ~/.vim/bundle
 $ . ~/.profile
 $ bmake; man bmake
-$ cd ~/trees/nbvm && bmake
+$ cd ~/trees/nbpkg && bmake
+$ cd ~/trees/nbvm && make
 ```
 
 ### 6. Build my dev tools
@@ -113,16 +117,18 @@ $ cd ~/trees/nbvm && bmake
 ```sh
 $ cd ~/trees/pkgsrc-cvs/pkgtools/shlock && msv NBPKG_PLATFORM
 $ make install clean
-$ cd ../../security/sudo && make install clean
+$ cd ../../security/doas && make install clean
 $ sudo pkg_admin fetch-pkg-vulnerabilities
-$ cd ../../shells/bash && make install clean
-$ chsh   # or passwd -e on Solaris
-$ cd pkgtools/pkg_rolling-replace && mic
-$ cd net/fetch && mic   # mozilla-rootcerts install here, if needed
-$ nbpkg mancompress
+$ cd ../../shells/zsh && make install clean
+$ chsh                         # or doas passwd -e schmonz on Solaris
+$ cd pkgtools/pkgchkxx && mic  # or pkg_rolling-replace
+$ cd net/fetch && mic          # mozilla-rootcerts install here, if needed
+$ nbpkg mancompress            # XXX does this correctly handle when no manpages are uncompressed?
 $ cd meta-pkgs/pkg_developer && mic
 $ nbpkg moretools
 ```
+
+XXX SmartOS at some point define `USE_PKGSRC_GCC` (and specify `GCC_REQD`?)
 
 ### 7. Start tracking `/etc/pkg`
 
