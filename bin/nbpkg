@@ -54,7 +54,7 @@ nbpkg_bootstrap() {
 }
 
 nbpkg_listcompilers() {
-	for i in $(pkg_info | awk '{print $1}'); do
+	for i in $(pkg_info | cut -d' ' -f1); do
 		echo $(pkg_info -Q CC_VERSION $i)
 	done \
 	| sort -u \
@@ -138,7 +138,7 @@ nbpkg_platform_freebsd() {
 
 nbpkg_platform_sunos() {
 	if [ -f /etc/product ]; then # SmartOS
-		${ECHO} $(${HEAD} -1 /etc/release | ${AWK} '{print $1}')-$(${GREP} '^Image:' < /etc/product | ${AWK} '{print $3}')
+		${ECHO} $(${HEAD} -1 /etc/release | xargs | cut -d' ' -f1)-$(${GREP} '^Image:' < /etc/product | cut -d' ' -f3)
 	else
 		${HEAD} -1 /etc/release | ${SED} -e 's|.*Oracle ||g' -e 's| X86$||' -e 's| |-|g'
 	fi
