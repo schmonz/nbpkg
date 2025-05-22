@@ -24,7 +24,9 @@ PKG_MAKE_JOBS.www/elinks=		1
 
 PKGSRC_USE_CTF=		yes
 DBG=			# don't add default optimizer flags from bootstrap-mk-files to CFLAGS
-CFLAGS+=		-g -O2 -pipe
+CFLAGS_DEFAULT=		-g -O2 -pipe
+PKG_CFLAGS.mail/qtools:=${CFLAGS_DEFAULT:N-g}
+CFLAGS+=		${PKG_CFLAGS.${PKGPATH}:U${CFLAGS_DEFAULT}}
 
 #ACCEPTABLE_LICENSES+=	gnu-gpl-v3 lame-license artistic-2.0
 ACCEPTABLE_LICENSES+=	vim-license ms-ttf-license gnu-agpl-v3 djb-nonlicense \
