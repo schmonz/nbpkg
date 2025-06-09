@@ -287,12 +287,26 @@ nbpkg_serverpackages() {
 	) 2>&1 | tee build.log
 }
 
+nbpkg_sudo() {
+	if [ -x ${NBPKG_PREFIX}/bin/doas ]; then
+		exec ${NBPKG_PREFIX}/bin/doas "$@"
+	elif [ -x /usr/bin/doas ]; then
+		exec /usr/bin/doas "$@"
+	elif [ -x ${NBPKG_PREFIX}/bin/sudo ]; then
+		exec ${NBPKG_PREFIX}/bin/sudo "$@"
+	elif [ -x /usr/bin/sudo ]; then
+		exec /usr/bin/sudo "$@"
+	else
+		exec sudo "$@"
+	fi
+}
+
 warn() {
 	echo >&2 "$@"
 }
 
 nbpkg_usage() {
-	warn "$(basename "$0") bootstrap|listcompilers|make|mancompress|moretools|platform|serverpackages"
+	warn "$(basename "$0") bootstrap|listcompilers|make|mancompress|moretools|platform|serverpackages|sudo"
 	exit 1
 }
 
@@ -307,6 +321,7 @@ main() {
 		moretools)	nbpkg_moretools		"$@"	;;
 		platform)	nbpkg_platform		"$@"	;;
 		serverpackages)	nbpkg_serverpackages	"$@"	;;
+		sudo)		nbpkg_sudo		"$@"	;;
 		*)		nbpkg_usage		"$@"	;;
 	esac
 	return $?
