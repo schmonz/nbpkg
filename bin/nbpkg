@@ -64,9 +64,8 @@ nbpkg_listcompilers() {
 
 nbpkg_make() {
 	mk=mk/bsd.pkg.mk
-	type bmake >/dev/null
-	_has_bmake=$([ $? -eq 0 ] && echo yes)
-	if [ "${_has_bmake}" ] && [ -f ../../$mk -o -f ../$mk -o -f $mk ]; then
+	_has_bmake=$(type bmake >/dev/null && echo yes || echo no)
+	if [ yes = "${_has_bmake}" ] && [ -f ../../$mk -o -f ../$mk -o -f $mk ]; then
 		exec bmake "$@"
 	elif [ -x /usr/bin/make ]; then
 		exec /usr/bin/make "$@"
