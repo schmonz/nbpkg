@@ -2,21 +2,21 @@
 
 ### NetBSD 10 things
 
-`nb boot netbsd 9 foo`
-Fetch binary sets, shut down
-`cp var/disks/netbsd9-foo.qcow2 var/disks/netbsd10-foo.qcow2`
-`git mv etc/nbvm-netbsd9-foo etc/nbvm-netbsd10-foo`
-`vi etc/nbvm-netbsd10-foo`
-`nb boot netbsd 10 foo`
-Install modules, kernel, maybe bootblocks
-Reboot into 10 kernel
-`hostname=netbsd10-foo`
-`dhcpcd_flags="${dhcpcd_flags} --waitip=4"`
-`rm -rf /stand/*/9.*`
-`chsh toor` (to `/rescue/sh`)
-`vipw` (for the `_dhcpcd` user to take)
-Reboot into full 10.0 and run `sysinst` from in there, for good measure
-`rm var/disks/netbsd9-foo.qcow2`
+- `nb boot netbsd 9 foo`
+- Fetch binary sets, shut down
+- `cp var/disks/netbsd9-foo.qcow2 var/disks/netbsd10-foo.qcow2`
+- `git mv etc/nbvm-netbsd9-foo etc/nbvm-netbsd10-foo`
+- `vi etc/nbvm-netbsd10-foo`
+- `nb boot netbsd 10 foo`
+- Install modules, kernel, maybe bootblocks
+- Reboot into 10 kernel
+- `hostname=netbsd10-foo`
+- `dhcpcd_flags="${dhcpcd_flags} --waitip=4"`
+- `rm -rf /stand/*/9.*`
+- `chsh toor` (to `/rescue/sh`)
+- `vipw` (for the `_dhcpcd` user to take)
+- Reboot into full 10.0 and run `sysinst` from in there, for good measure
+- `rm var/disks/netbsd9-foo.qcow2`
 
 -----
 
