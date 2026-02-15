@@ -35,7 +35,6 @@ graphics/p5-Image-JpegTran-AutoRotate
 graphics/php-gd
 lang/execline
 lang/openjdk21
-mail/bincimap
 mail/dovecot2-fts-flatcurve
 mail/mutt
 mail/qconfirm
@@ -43,6 +42,7 @@ mail/qmqtool
 mail/qtraceaddr
 mail/queue-fix
 mail/rss2email
+mail/smtpd-starttls-proxy
 meta-pkgs/qmail-server
 misc/s6-portable-utils
 misc/tmux
