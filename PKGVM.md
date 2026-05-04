@@ -120,7 +120,7 @@ $ make install clean
 $ cd ../../security/doas && make install clean
 $ sudo pkg_admin fetch-pkg-vulnerabilities
 $ cd ../../shells/zsh && make install clean
-$ chsh                         # or doas passwd -e schmonz on Solaris
+$ chsh -s /opt/pkg/bin/zsh     # or doas passwd -e schmonz on Solaris
 $ cd pkgtools/pkgchkxx && mic  # or pkg_rolling-replace
 $ cd net/fetch && mic          # mozilla-rootcerts install here, if needed
 $ nbpkg mancompress            # XXX does this correctly handle when no manpages are uncompressed?
