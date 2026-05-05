@@ -12,13 +12,15 @@
 #PKG_DEVELOPER=
 
 PKGSRC_COMPILER=	gcc
+# fftw wants 10, libheif and rspamd want 12-libs, protobuf wants 13-libs
+GCC_REQD=		13
 #PKGSRC_COMPILER=	clang
 #CLANGBASE=		/usr/pkg
 #CC=			clang
 #CXX=			clang++
 #CPP=			${CC} -E
 
-MAKE_JOBS_DEFAULT=	2
+MAKE_JOBS_DEFAULT=	6
 MAKE_JOBS=		${PKG_MAKE_JOBS.${PKGPATH}:U${MAKE_JOBS_DEFAULT}}
 PKG_MAKE_JOBS.www/elinks=		1
 
