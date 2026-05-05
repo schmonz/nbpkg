@@ -12,8 +12,6 @@
 #PKG_DEVELOPER=
 
 PKGSRC_COMPILER=	gcc
-# fftw wants 10, libheif and rspamd want 12-libs, protobuf wants 13-libs
-GCC_REQD=		13
 #PKGSRC_COMPILER=	clang
 #CLANGBASE=		/usr/pkg
 #CC=			clang
