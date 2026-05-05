@@ -34,7 +34,6 @@ graphics/p5-Image-Imlib2
 graphics/p5-Image-JpegTran-AutoRotate
 graphics/php-gd
 lang/execline
-lang/openjdk21
 mail/dovecot2-fts-flatcurve
 mail/mutt
 mail/qconfirm
